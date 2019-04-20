@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 
-
 import { AuthService } from './auth/auth.service';
 import * as schema from './schema/equipment.json';
 
@@ -32,6 +31,7 @@ export class AppComponent implements OnInit {
     // init this.user on startup
     this.authService.me().subscribe(data => {
       this.user = data.user;
+      this.navigate('');
     });
 
     // update this.user after login/register/logout

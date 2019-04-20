@@ -8,21 +8,21 @@ const config = require('../config/config');
 const router = express.Router();
 module.exports = router;
 
-router.post('/register', asyncHandler(register), login);
-router.post('/login', passport.authenticate('local', { session: false }), login);
+router.post('/login', login);
 router.get('/me', passport.authenticate('jwt', { session: false }), login);
 
 
-async function register(req, res, next) {
-  let user = await userCtrl.insert(req.body);
+async function login(req, res) {
+  let user;
+  if (req.user) {
+    user = await userCtrl.getById(req.user._id);
+    console.log(user);
+  }
+  else {
+    user = await userCtrl.insert(req.body);
+    console.log(user);
+  }
   user = user.toObject();
-  delete user.hashedPassword;
-  req.user = user;
-  next()
-}
-
-function login(req, res) {
-  let user = req.user;
   let token = authCtrl.generateToken(user);
   res.json({ user, token });
 }

@@ -8,19 +8,24 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
-import { AdminModule } from './admin/admin.module';
 import { AuthHeaderInterceptor } from './interceptors/header.interceptor';
 import { CatchErrorInterceptor } from './interceptors/http-error.interceptor';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { UsersListComponent } from './users-list/users-list.component';
+
+import { AppService} from './app.service';
+import { MessageListComponent } from './message-list/message-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    UsersListComponent,
+    MessageListComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,6 @@ import { HomeComponent } from './home/home.component';
     RouterModule,
     SharedModule,
     AuthModule,
-    AdminModule,
     AppRoutingModule,
   ],
   providers: [{
@@ -40,7 +44,9 @@ import { HomeComponent } from './home/home.component';
     provide: HTTP_INTERCEPTORS,
     useClass: CatchErrorInterceptor,
     multi: true,
-  }],
+  },
+  AppService
+  ],
   entryComponents: [],
   bootstrap: [AppComponent]
 })
