@@ -14,15 +14,18 @@ router.get('/me', passport.authenticate('jwt', { session: false }), login);
 
 async function login(req, res) {
   let user;
-  if (req.user) {
-    user = await userCtrl.getById(req.user._id);
-    console.log(user);
+  try {
+    if (req.user) {
+      user = await userCtrl.getById(req.user._id);
+    }
+    else {
+      user = await userCtrl.insert(req.body);
+    }
+    user = user.toObject();
+    let token = authCtrl.generateToken(user);
+    res.json({ user, token });
+  } catch (error) {
+    res.status(500).send({ error: "User already exist" });
   }
-  else {
-    user = await userCtrl.insert(req.body);
-    console.log(user);
-  }
-  user = user.toObject();
-  let token = authCtrl.generateToken(user);
-  res.json({ user, token });
+
 }

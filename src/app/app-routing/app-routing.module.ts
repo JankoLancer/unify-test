@@ -5,13 +5,11 @@ import { HomeComponent } from '../home/home.component';
 
 const routes: Routes = [{
   path: '',
-  component: HomeComponent
+  component: HomeComponent,
+  canActivate: [AuthGuard]
 }, {
   path: 'auth',
   loadChildren: 'app/auth/auth.module#AuthModule'
-}, {
-  path: 'admin',
-  loadChildren: 'app/admin/admin.module#AdminModule'
 }];
 
 @NgModule({
