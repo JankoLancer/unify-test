@@ -18,9 +18,25 @@ export class AppService {
   connectMessage(): Observable<any> {
     return Observable.create((observer) => {
       this.socket.on('new-message', (message) => {
-          observer.next(message);
+        observer.next(message);
       });
-  });
+    });
+  }
+
+  connectUserActivated(): Observable<any>{
+    return Observable.create((observer) => {
+      this.socket.on('user-activated', (user) => {
+        observer.next(user);
+      });
+    });
+  }
+
+  connectUserDectivated(): Observable<any>{
+    return Observable.create((observer) => {
+      this.socket.on('user-deactivated', (user) => {
+        observer.next(user);
+      });
+    });
   }
 
   getUser(): any {

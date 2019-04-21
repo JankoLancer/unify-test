@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>Messages</mat-card-title>
-  <mat-card-content>
+  <mat-card-content [style.overflow]="'auto'" [style.height]="'80vh'">
     <div *ngFor="let message of messages">
       [{{ message.datetime | date:'medium' }}] - {{ message.author.name }} : {{ message.text}}
     </div>

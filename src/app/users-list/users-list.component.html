@@ -1,6 +1,8 @@
 <mat-card>
   <mat-card-title>Users</mat-card-title>
-  <div *ngFor="let user of users">
-    {{ user.name }}
-  </div>
+  <mat-card-content [style.overflow]="'auto'" [style.height]="'40vh'">
+    <div *ngFor="let user of users" >
+      {{ user.name }}
+    </div>
+  </mat-card-content>
 </mat-card>

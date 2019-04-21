@@ -14,18 +14,18 @@ router.get('/me', passport.authenticate('jwt', { session: false }), login);
 
 
 async function login(req, res) {
+  var io = req.app.get('socketio');
   let user;
   try {
     if (req.user) {
-      console.log(user);
       user = await userCtrl.getById(req.user._id);
     }
     else {
-      console.log(user);
       user = await userCtrl.insert(req.body);
     }
     user = user.toObject();
     let token = authCtrl.generateToken(user);
+    io.emit("user-activated", user);
     res.json({ user, token });
   } 
   catch (error) {
@@ -34,6 +34,8 @@ async function login(req, res) {
 }
 
 async function logout(req, res){
+  var io = req.app.get('socketio');
   let user = userCtrl.deactivate(req.body);
+  io.emit("user-deactivated", req.body);
   res.json({user});
 }

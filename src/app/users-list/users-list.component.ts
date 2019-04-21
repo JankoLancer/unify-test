@@ -9,7 +9,17 @@ import { AppService } from '../app.service';
 export class UsersListComponent implements OnInit {
 
   users: any[];
-  constructor(private service: AppService) { }
+  
+  constructor(private service: AppService) {
+    this.service.connectUserActivated().subscribe(user => {
+      this.users.push(user);
+    });
+
+    this.service.connectUserDectivated().subscribe(user => {
+      let index = this.users.find(x => x._id == user._id);
+      this.users = this.users.splice(index, 1);
+    });
+  }
 
   ngOnInit() {
     this.service.getUsers().subscribe(users => {
