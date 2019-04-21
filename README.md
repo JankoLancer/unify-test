@@ -5,20 +5,20 @@ For initialization of project I have used https://github.com/linnovate/mean proj
 
 - Try live demo at https://unify-test.herokuapp.com/
 
-##Features
+## Features
 - Login with unique username
 - After login join public chat
 - View all messages from all users
 - View all active users
 - Send new message
 
-#Getting started
-###Pre-requisites
+# Getting started
+### Pre-requisites
 - git
 - node.js v8.x
 - mongodb v3.4.x
 
-###Instalation
+### Instalation
 Make sure that MongoDB is running on your machine at port 27017 and 4040 port is available to run node.js server.
 ```
 git clone https://github.com/JankoLancer/unify-test.git
@@ -29,7 +29,7 @@ npm start
 ```
 Visit http://localhost:4200 in your browser to test app.
 
-###Technologies and Libraries
+### Technologies and Libraries
 - [NodeJS](https://nodejs.org/) - JavaScript backend/server-side solution of choice
 
   - [Joi](https://github.com/hapijs/joi) - Object schema description language and validator for JavaScript objects.
