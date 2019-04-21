@@ -12,7 +12,6 @@ import { AuthHeaderInterceptor } from './interceptors/header.interceptor';
 import { CatchErrorInterceptor } from './interceptors/http-error.interceptor';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { UsersListComponent } from './users-list/users-list.component';
 
@@ -25,7 +24,6 @@ const config: SocketIoConfig = { url: 'http://localhost:4040', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     HomeComponent,
     UsersListComponent,
     MessageListComponent,
