@@ -19,7 +19,7 @@ import { AppService} from './app.service';
 import { MessageListComponent } from './message-list/message-list.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:4040', options: {} };
+const config: SocketIoConfig = { url: '/', options: {} };
 
 @NgModule({
   declarations: [
