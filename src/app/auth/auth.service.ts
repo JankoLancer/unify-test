@@ -52,9 +52,19 @@ export class AuthService {
     });
   }
 
-  signOut(): void {
-    this.token.signOut();
-    this.setUser(null);
-    delete (<any>window).user;
+  signOut(user): Observable<any> {
+    return Observable.create(observer => {
+      this.http.request("delete", '/api/auth/logout', {
+        body: user
+      }).subscribe((data: any) => {
+        observer.next({ user: data.user });
+        this.token.signOut();
+        this.setUser(null);
+        delete (<any>window).user;
+        observer.complete();
+      })
+    });
+
+
   }
 }

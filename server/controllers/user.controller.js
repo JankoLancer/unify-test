@@ -9,6 +9,7 @@ const userSchema = Joi.object({
 
 module.exports = {
   insert,
+  remove,
   getById,
   getAll
 }
@@ -16,6 +17,10 @@ module.exports = {
 async function insert(user) {
   user = await Joi.validate(user, userSchema, { abortEarly: false });
   return await new User(user).save();
+}
+
+async function remove(user) {
+  return await User(user).deleteOne({_id: user._id})
 }
 
 async function getById(id){

@@ -9,6 +9,7 @@ const router = express.Router();
 module.exports = router;
 
 router.post('/login', login);
+router.delete('/logout', logout);
 router.get('/me', passport.authenticate('jwt', { session: false }), login);
 
 
@@ -24,8 +25,13 @@ async function login(req, res) {
     user = user.toObject();
     let token = authCtrl.generateToken(user);
     res.json({ user, token });
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).send({ error: "User already exist" });
   }
+}
 
+async function logout(req, res){
+  let user = userCtrl.remove(req.body);
+  res.json({user});
 }

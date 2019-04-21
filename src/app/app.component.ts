@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MatIconRegistry } from "@angular/material";
@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() {
-
     // init this.user on startup
     this.authService.me().subscribe(data => {
       this.user = data.user;
@@ -40,16 +39,22 @@ export class AppComponent implements OnInit {
     });
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event) {
+    this.logout();
+  }
+
   logout(): void {
-    this.authService.signOut();
-    this.navigate('');
+    this.authService.signOut(this.user).subscribe(res => {
+      this.navigate('/auth/login');
+    })
   }
 
   navigate(link): void {
     this.router.navigate([link]);
   }
 
-  ngOnDestroy() { 
+  ngOnDestroy() {
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
     }
