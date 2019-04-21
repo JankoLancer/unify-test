@@ -19,6 +19,9 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { AppService} from './app.service';
 import { MessageListComponent } from './message-list/message-list.component';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:4040', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +38,7 @@ import { MessageListComponent } from './message-list/message-list.component';
     SharedModule,
     AuthModule,
     AppRoutingModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

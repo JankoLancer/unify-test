@@ -58,9 +58,6 @@ export class AuthService {
         body: user
       }).subscribe((data: any) => {
         observer.next({ user: data.user });
-        this.token.signOut();
-        this.setUser(null);
-        delete (<any>window).user;
         observer.complete();
       })
     });

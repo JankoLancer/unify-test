@@ -17,9 +17,11 @@ async function login(req, res) {
   let user;
   try {
     if (req.user) {
+      console.log(user);
       user = await userCtrl.getById(req.user._id);
     }
     else {
+      console.log(user);
       user = await userCtrl.insert(req.body);
     }
     user = user.toObject();
@@ -32,6 +34,6 @@ async function login(req, res) {
 }
 
 async function logout(req, res){
-  let user = userCtrl.remove(req.body);
+  let user = userCtrl.deactivate(req.body);
   res.json({user});
 }
