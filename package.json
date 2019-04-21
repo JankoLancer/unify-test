@@ -11,6 +11,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "engines": {
+    "node": "8.16.0"
+  },
   "private": true,
   "dependencies": {
     "@angular-devkit/core": "0.3.2",
