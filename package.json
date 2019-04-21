@@ -11,6 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "engineStrict": true,
   "engines": {
     "node": "8.16.0"
   },
