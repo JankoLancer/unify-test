@@ -6,6 +6,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
     index:true 
+  },
+  active: {
+    type: Boolean,
+    required: true
   }
 }, {
   versionKey: false
