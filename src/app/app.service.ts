@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/first';
 
 import { TokenStorage } from './auth/token.storage';
 
@@ -46,8 +48,8 @@ export class AppService {
     (<any>window).user = user;
   }
 
-  getUser(): Observable<any> {
-    return this.$userSource.asObservable();
+  getUser(): any {
+    return (<any>window).user;
   }
 
   me(): Observable<any> {
@@ -74,7 +76,7 @@ export class AppService {
         observer.next(data);
         observer.complete();
       })
-    }); 
+    });
   }
 
   getMessages(): Observable<any[]> {
@@ -83,7 +85,19 @@ export class AppService {
         observer.next(data);
         observer.complete();
       })
-    }); 
+    });
+  }
+
+  sendMessage(text): Observable<any> {
+    return Observable.create(observer => {
+      this.http.post('/api/message', {
+        text: text,
+        author: this.getUser()._id
+      }).subscribe((data: any) => {
+        observer.next(data);
+        observer.complete();
+      })
+    });
   }
 
 }
