@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AppService } from '../app.service';
 
 @Component({
@@ -10,11 +10,13 @@ export class MessageListComponent implements OnInit {
 
   messages: any[];
   text: string;
+  
+  @ViewChild('inputText') searchElement: ElementRef;
 
-  constructor(private service: AppService) { 
-    this.service.connectMessage().subscribe(message =>{
+  constructor(private service: AppService) {
+    this.service.connectMessage().subscribe(message => {
       this.messages.push(message);
-    })
+    });
   }
 
   ngOnInit() {
@@ -23,9 +25,14 @@ export class MessageListComponent implements OnInit {
     });
   }
 
-  sendMessage(){
+  //Focus on new message box when enter chat
+  ngAfterViewInit(): void {   
+    this.searchElement.nativeElement.focus();    
+  }
+
+  sendMessage() {
     this.service.sendMessage(this.text).subscribe(newMessage => {
-      //this.messages.push(newMessage);
+      this.text = "";
     })
   }
 

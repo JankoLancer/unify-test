@@ -8,7 +8,7 @@
   <mat-card-actions>
     <div class="content" fxLayout="row" fxLayoutAlign="stretch" fxFlexFill>
       <mat-form-field fxFlex="90">
-        <input matInput placeholder="Enter message" [(ngModel)]="text">
+        <input matInput #inputText placeholder="Enter message" (keyup.enter)="sendMessage()" [(ngModel)]="text">
       </mat-form-field>
 
       <button fxFlex="10" mat-raised-button (click)="sendMessage()">Send message</button>
