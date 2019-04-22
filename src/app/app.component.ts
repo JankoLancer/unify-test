@@ -22,9 +22,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry
-  ) {
-    this.registerSvgIcons()
-  }
+  ) { }
 
   public ngOnInit() {
     // init this.user on startup
@@ -39,6 +37,8 @@ export class AppComponent implements OnInit {
     });
   }
 
+  //Listener for events that fire when a window is about to unload its resources
+  //Logout user when that happens
   @HostListener('window:beforeunload', ['$event'])
   beforeunloadHandler(event) {
     this.logout();
@@ -59,44 +59,4 @@ export class AppComponent implements OnInit {
       this.userSubscription.unsubscribe();
     }
   }
-
-  registerSvgIcons() {
-    [
-      'close',
-      'add',
-      'add-blue',
-      'airplane-front-view',
-      'air-station',
-      'balloon',
-      'boat',
-      'cargo-ship',
-      'car',
-      'catamaran',
-      'clone',
-      'convertible',
-      'delete',
-      'drone',
-      'fighter-plane',
-      'fire-truck',
-      'horseback-riding',
-      'motorcycle',
-      'railcar',
-      'railroad-train',
-      'rocket-boot',
-      'sailing-boat',
-      'segway',
-      'shuttle',
-      'space-shuttle',
-      'steam-engine',
-      'suv',
-      'tour-bus',
-      'tow-truck',
-      'transportation',
-      'trolleybus',
-      'water-transportation',
-    ].forEach((icon) => {
-      this.matIconRegistry.addSvgIcon(icon, this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`))
-    });
-  }
-
 }
