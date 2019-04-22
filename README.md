@@ -62,3 +62,7 @@ Visit http://localhost:4200 in your browser to test app.
   - [Flex-layout](https://github.com/angular/flex-layout) - Flexbox CSS for Angular
   
 
+### TODO
+- Better UI
+- Mock data for testing
+- Test docker build
