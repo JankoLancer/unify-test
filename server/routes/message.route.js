@@ -8,7 +8,7 @@ module.exports = router;
 
 router.use(passport.authenticate('jwt', { session: false }))
 router.get('/', messages);
-router.post('/', asyncHandler(insert));
+router.post('/add', insert);
 
 
 async function insert(req, res) {

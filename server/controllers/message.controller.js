@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const Message = require('../models/message.model');

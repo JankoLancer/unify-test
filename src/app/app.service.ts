@@ -63,7 +63,7 @@ export class AppService {
 
   sendMessage(text): Observable<any> {
     return Observable.create(observer => {
-      this.http.post('/api/message', {
+      this.http.post('/api/message/add', {
         text: text,
         author: this.getUser()._id
       }).subscribe((data: any) => {

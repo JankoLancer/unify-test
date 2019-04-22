@@ -2,7 +2,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const bcrypt = require('bcrypt');
 
 const User = require('../models/user.model');
 const config = require('./config');
@@ -11,7 +10,7 @@ const localLogin = new LocalStrategy({
   usernameField: 'name'
 }, async (email, password, done) => {
   let user = await User.findOne({ email });
-  if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
+  if (!user) {
     return done(null, false, { error: 'Your login details could not be verified. Please try again.' });
   }
   user = user.toObject();
