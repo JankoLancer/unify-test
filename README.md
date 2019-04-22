@@ -29,6 +29,9 @@ npm start
 ```
 Visit http://localhost:4200 in your browser to test app.
 
+### Docs
+- Interactice Api documentation can be seen on http://localhost:4200/api-docs
+
 ### Technologies and Libraries
 - [NodeJS](https://nodejs.org/) - JavaScript backend/server-side solution of choice
 

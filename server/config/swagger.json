@@ -1,64 +1,71 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Mean Application API",
-      "description": "Mean Application API",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.1.0",
+    "title": "Chat Application API",
+    "description": "Chat Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:4040",
+  "basePath": "/api/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
     },
-    "host": "localhost:4040",
-    "basePath": "/api/",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "API for users in the system"
-      },
-      {
-        "name": "Auth",
-        "description": "API for auth in the system"
-      }
-    ],
-    "schemes": [
-      "http"
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "securityDefinitions": {
-      "AuthHeader": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "Authorization"
-      }
+    {
+      "name": "Auth",
+      "description": "API for auth in the system"
     },
-    "paths": {
-      "/auth/login": {
-        "post": {
-          "tags": ["Auth"],
-          "description": "Login to the system",
-        "parameters": [{
-          "name": "auth",
-          "in": "body",
-          "description": "User auth details",
-          "schema": {
-            "type": "object",
-            "required": ["email", "password"],
-            "properties": {
-              "email": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
+    {
+      "name": "Message",
+      "description": "API for message in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "AuthHeader": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"      
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Login to the system",
+        "parameters": [
+          {
+            "name": "auth",
+            "in": "body",
+            "description": "User auth details",
+            "schema": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
               }
             }
           }
-        }],
+        ],
         "produces": [
           "application/json"
         ],
@@ -71,51 +78,195 @@
           }
         }
       }
-      }
     },
-    "definitions": {
-      "User": {
-        "required": [
-          "email",
-          "fullname"
+    "/auth/logout": {
+      "delete": {
+        "tags": [
+          "Auth"
         ],
-        "properties": {
-          "_id": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "email": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "fullname": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
+        "description": "Deactivate from chat",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User details",
+            "schema": {
+              "type": "User",
+              "required": [
+                "name",
+                "_id"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "_id": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is deactivated",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
           }
         }
-      },
-      "Users": {
-        "type": "array",
-        "$ref": "#/definitions/User"
-      },
-      "Auth": {
-        "type": "object",
-        "properties": [{
-          "token": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/definitions/User"
-          }
-        }]
       }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [{ "AuthHeader": [] }],
+        "description": "Return user by _id",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "header",
+            "description": "User _id details",
+            "schema": {
+              "type": "object",
+              "required": [
+                "_id"
+              ],
+              "properties": {
+                "_id": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is loggedin",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/message": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "security": [{ "AuthHeader": [] }],
+        "description": "Return all messages",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "All messages",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/message/add": {
+      "post": {
+        "tags": [
+          "Message"
+        ],
+        "security": [{ "AuthHeader": [] }],
+        "description": "Add new message",
+        "parameters": [
+          {
+            "name": "message",
+            "in": "body",
+            "description": "Message details",
+            "schema": {
+              "type": "Message",
+              "required": [
+                "text",
+                "author"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "author":{
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New message",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [{ "AuthHeader": [] }],
+        "description": "Return all users",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "All users",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Message": {
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "datetime": {
+          "type": "date"
+        },
+        "author": {
+          "$ref": "#/definitions/User"
+        }
+      }
+    }
   }
 }
